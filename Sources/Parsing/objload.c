@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 21:27:23 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/08 21:37:57 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/08 21:59:01 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 t_obj       *getobj(t_obj *obj);
 int         objerror(int code);
+int         main_parser(t_obj *obj);
 
 int         objload(char *path)
 {
@@ -25,5 +26,8 @@ int         objload(char *path)
     obj = getobj(NULL);
     if (!obj)
         return (objerror(3));
+    obj->path = path;
+    if (main_parser(obj))
+        return (2);
     return (0);
 }
