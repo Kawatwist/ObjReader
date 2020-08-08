@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "objreader.h": "c",
+        "objerror.h": "c",
+        "fcntl.h": "c"
+    }
+}

@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 21:54:34 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/08 22:06:17 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/08 22:07:16 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int             main_parser(t_obj *obj)
     while (get_next_line(fd, &line))
     {
         printf("%s\n", line);
-        if (line[0] == 'f')
+        if (line[0] == 'v')
             fonction_face(obj);
         free(line);
     }

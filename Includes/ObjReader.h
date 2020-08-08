@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 20:17:18 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/08 21:49:30 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/08 22:14:23 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ typedef struct          s_obj
 	t_vertex			*vp;
 	struct s_obj        *next;
 }                       t_obj;
+
+/*
+**	Parsing
+*/
+
+char        *skip_whitespace(char *str);
 
 /*
 **	Initialize

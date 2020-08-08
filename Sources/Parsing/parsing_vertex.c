@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_obj.c                                         :+:      :+:    :+:   */
+/*   parsing_vertex.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/08 20:58:20 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/08 22:19:12 by lomasse          ###   ########.fr       */
+/*   Created: 2020/08/08 22:08:52 by lomasse           #+#    #+#             */
+/*   Updated: 2020/08/08 22:20:22 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/ObjReader.h"
+#include "../../Includes/ObjError.h"
 
-t_obj       *getobj(t_obj *obj);
-
-int     init_obj(t_obj *obj)
+char    find_type(char  *line)
 {
-	if (obj == NULL)
-		return (-1);
-	obj->id = 0;
-	obj->sub_id = 0;
-	obj->path = NULL;
-	obj->face = NULL;
-	obj->v = NULL;
-	obj->vt = NULL;
-	obj->vn = NULL;
-	obj->vp = NULL;
-	obj->next = NULL;
-	getobj(obj);
-	return (0);
+    if (line[1] == ' ' || line[1] == '\t' || line[1] == '\f')
+        return (0);
+    else if (line[1] == 't')
+        return (1);
+    else if (line[1] == 'n')
+        return (2);
+    else if (line[1] == 'p')
+        return (3);
+    return (-1);
+}
+
+int     parsing_vertex(t_obj *obj, char *line)
+{
+    char    type;
+    type = find_type(line);
+    return (0);
 }
