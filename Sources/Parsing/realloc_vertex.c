@@ -6,28 +6,24 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 22:48:16 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/08 23:10:04 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 13:53:39 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/ObjReader.h"
 #include "../../Includes/ObjError.h"
 
-static int		ft_ralloc(char **str, long int newsize)
+static char     *ft_ralloc(char **str, long int newsize)
 {
 	char *res;
 
-	if (!(res = ft_strdup(*str)))
+	if (!(res = ft_strnew(newsize)))
 		return (0);
-	ft_memdel((void**)str);
-	if (!(*str = ft_strnew(newsize)))
-		return (0);
-	*str = ft_memcpy(*str, res, newsize / 2);
-	ft_memdel((void **)&res);
-	return (1);
+	res = ft_memcpy(res, *str, newsize / 2);
+	ft_memdel((void **)str);
+    return (res);
 }
-
-void         *realloc_vertex(t_obj *obj, char type, void    *dest)
+void         *realloc_vertex(t_obj *obj, char type, void    **dest)
 {
     long int    size;
  
@@ -39,7 +35,7 @@ void         *realloc_vertex(t_obj *obj, char type, void    *dest)
         size = obj->size_vn[1] * sizeof(t_vertex);
     else if (type == 3)
         size = obj->size_vp[1] * sizeof(t_vertex);
-    if (!(ft_ralloc((char **)(&dest), size)))
+    else
         return (NULL);
-    return ((void *)0x1);
+    return (ft_ralloc((char **)(dest), size));
 }

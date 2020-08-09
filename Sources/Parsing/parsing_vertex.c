@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 22:08:52 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/08 23:12:30 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 16:44:15 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,19 @@ static int      check_realloc(t_obj *obj, char type)
     return (0);
 }
 
+int         fill_vertex(t_obj *obj, char *line, char type);
+
 int             parsing_vertex(t_obj *obj, char *line)
 {
     char    type;
     int     error;
 
     type = find_type(line);
-        printf("%d\n", type);
     if (type == -1)
         return (-1);
-    // fill_vertex(obj, line, type);
-        printf("%d\n", type);
+    if ((error = fill_vertex(obj, line, type)))
+        return (error);
     if ((check_realloc(obj, type)))
         return (1);
-        printf("%d\n", type);
     return (0);
 }

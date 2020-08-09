@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 20:55:57 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/08 21:44:18 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 16:46:57 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ t_obj       *getobj(t_obj *obj)
     return (save);
 }
 
-int         objerror(int code)
+int         objerror(t_obj *obj, int code)
 {
     static char    *tab[] = {ERR_OBJ_VALID, ERR_OBJ_MALLOC, ERR_OBJ_OPEN, ERR_OBJ_NOT_INIT, 
                         ERR_OBJ_PARSING,ERR_OBJ_INVALID};
 
 	code >= ERR_MAX ? code = ERR_MAX - 1: 0;
 	code < 0 ? code = ERR_MAX - 1 : 0;
+    if (code == 4)
+        printf("Error line : %ld\n", obj->line);
     printf("%s", tab[code]);
     return (code);
 }
@@ -45,9 +47,9 @@ int         main(int argc, char **argv)
     t_obj   obj;
 
     if (init_obj(&obj) == -1)
-        return (objerror(-1));
+        return (objerror(&obj, -1));
     if (argc < 2 || argc > 2)
-        return (objerror(2));
+        return (objerror(&obj, 2));
     objload(argv[1]);
     return (0);
 }
