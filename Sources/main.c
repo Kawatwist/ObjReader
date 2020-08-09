@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 20:55:57 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/09 19:43:50 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 19:55:31 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_obj       *getobj(t_obj *obj)
         save = obj;
     else if (save != NULL && obj != NULL)
     {
-        printf("Do not send obj to this function to get obj pointeur\n");
+        printf("Send Null to this function to get obj pointeur\n");
         return (NULL);
     }
     return (save);
