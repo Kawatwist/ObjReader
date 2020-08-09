@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 20:55:57 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/09 21:08:58 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 21:45:34 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,10 @@ int         main(int argc, char **argv)
     if (argc < 2 || argc > 2)
         return (objerror(obj, 2));
     objload(argv[1]);
+	int i = -1;
+	while (++i < obj->size_v[0])
+	{
+		printf("%f || %f || %f\n", obj->v[i].x, obj->v[i].y, obj->v[i].z);
+	}
     return (0);
 }
