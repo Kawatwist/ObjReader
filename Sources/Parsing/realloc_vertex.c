@@ -6,12 +6,11 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 22:48:16 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/09 13:53:39 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 19:43:40 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/ObjReader.h"
-#include "../../Includes/ObjError.h"
 
 static char     *ft_ralloc(char **str, long int newsize)
 {

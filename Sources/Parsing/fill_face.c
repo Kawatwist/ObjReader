@@ -6,14 +6,11 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:00:45 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/09 17:56:09 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 19:42:58 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/ObjReader.h"
-#include "../../Includes/ObjError.h"
-#include "../../libft/get_next_line.h"
-#include <fcntl.h>
 
 static char     *ft_ralloc(char **str, long int newsize)
 {
@@ -26,7 +23,7 @@ static char     *ft_ralloc(char **str, long int newsize)
     return (res);
 }
 
-void         *realloc_face(t_obj *obj, void    **dest)
+static void       *realloc_face(t_obj *obj, void    **dest)
 {
     long int    size;
  
@@ -34,9 +31,7 @@ void         *realloc_face(t_obj *obj, void    **dest)
     return (ft_ralloc((char **)(dest), size));
 }
 
-int         find_next(char *line, int i);
-
-int         allocate_index(t_obj *obj, int nb_index)
+static int       allocate_index(t_obj *obj, int nb_index)
 {
     obj->face[obj->size_face[0]].size = nb_index;
     if (!(obj->face[obj->size_face[0]].i_v = malloc((sizeof(int) * nb_index) * 3)))
@@ -47,9 +42,7 @@ int         allocate_index(t_obj *obj, int nb_index)
     return (0);
 }
 
-int         find_next(char *line, int i);
-
-int         get_index(char *line, int *i, int (*index)[3], int nb, t_face *f)
+static int       get_index(char *line, int *i, int (*index)[3], int nb, t_face *f)
 {
     int j;
 
@@ -94,7 +87,7 @@ int         get_index(char *line, int *i, int (*index)[3], int nb, t_face *f)
     return (0);
 }
 
-int         fill_index_face(t_obj *obj, char *line)
+static int         fill_index_face(t_obj *obj, char *line)
 {
     int     index[3];
     int     i;
@@ -115,7 +108,7 @@ int         fill_index_face(t_obj *obj, char *line)
     return (0);
 }
 
-int         fill_face(t_obj *obj, char *line)
+static int         fill_face(t_obj *obj, char *line)
 {
     int     nb_index;
     int     i;

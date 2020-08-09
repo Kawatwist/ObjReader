@@ -6,20 +6,13 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 21:54:34 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/09 17:57:24 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 19:43:08 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/ObjReader.h"
-#include "../../Includes/ObjError.h"
-#include "../../libft/get_next_line.h"
-#include <fcntl.h>
 
-int         objerror(t_obj *obj, int code);
-int         parsing_vertex(t_obj *obj, char *line);
-int         parsing_face(t_obj *obj, char *line);
-
-int            init_v_malloc(t_obj *obj)
+static int            init_v_malloc(t_obj *obj)
 {
     obj->size_face[0] = 0;
     obj->size_face[1] = 64;
@@ -48,7 +41,7 @@ int            init_v_malloc(t_obj *obj)
     return (0);
 }
 
-int             adjust_allocation(t_obj *obj)
+static int             adjust_allocation(t_obj *obj)
 {
     return (0);
 }

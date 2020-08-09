@@ -6,14 +6,11 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 22:08:52 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/09 16:44:15 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 19:45:56 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/ObjReader.h"
-#include "../../Includes/ObjError.h"
-
-void         *realloc_vertex(t_obj *obj, char type, void    *dest);
 
 static char    find_type(char  *line)
 {
@@ -36,7 +33,7 @@ static int      check_realloc(t_obj *obj, char type)
         if (obj->size_v[0] == obj->size_v[1])
         {
            obj->size_v[1] *= 2;
-           if (!(obj->v = realloc_vertex(obj, type, &obj->v)))
+           if (!(obj->v = realloc_vertex(obj, type, (void **)(&obj->v))))
             return (1);
         }
     }
@@ -46,7 +43,7 @@ static int      check_realloc(t_obj *obj, char type)
         if (obj->size_vt[0] == obj->size_vt[1])
         {
            obj->size_vt[1] *= 2;
-           if (!(obj->vt = realloc_vertex(obj, type, &obj->vt)))
+           if (!(obj->vt = realloc_vertex(obj, type, (void **)(&obj->vt))))
             return (1);
         }
     }
@@ -56,7 +53,7 @@ static int      check_realloc(t_obj *obj, char type)
         if (obj->size_vn[0] == obj->size_vn[1])
         {
            obj->size_vn[1] *= 2;
-           if (!(obj->vn = realloc_vertex(obj, type, &obj->vn)))
+           if (!(obj->vn = realloc_vertex(obj, type, (void **)(&obj->vn))))
             return (1);
         }
     }
@@ -66,14 +63,12 @@ static int      check_realloc(t_obj *obj, char type)
         if (obj->size_vp[0] == obj->size_vp[1])
         {
            obj->size_vp[1] *= 2;
-           if (!(obj->vp = realloc_vertex(obj, type, &obj->vp)))
+           if (!(obj->vp = realloc_vertex(obj, type, (void **)(&obj->vp))))
             return (1);
         }
     }
     return (0);
 }
-
-int         fill_vertex(t_obj *obj, char *line, char type);
 
 int             parsing_vertex(t_obj *obj, char *line)
 {

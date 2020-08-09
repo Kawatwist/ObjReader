@@ -6,14 +6,11 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 20:55:57 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/09 16:46:57 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 19:43:50 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/ObjReader.h"
-#include "../Includes/ObjError.h"
-
-int         objload(char *path);
 
 t_obj       *getobj(t_obj *obj)
 {

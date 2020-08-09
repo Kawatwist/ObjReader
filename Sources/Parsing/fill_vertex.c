@@ -6,12 +6,11 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 23:04:39 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/09 16:44:03 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 19:43:19 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/ObjReader.h"
-#include "../../Includes/ObjError.h"
 
 int         find_next(char *line, int i)
 {
@@ -22,7 +21,7 @@ int         find_next(char *line, int i)
     return (i);
 }
 
-int         str_tov4(t_vertex4 *dest, char *line)
+static int         str_tov4(t_vertex4 *dest, char *line)
 {
     int i;
 
@@ -47,14 +46,14 @@ int         str_tov4(t_vertex4 *dest, char *line)
     return (0);
 }
 
-void        set_v4to_v3(t_vertex *dest, t_vertex4 src)
+static void        set_v4to_v3(t_vertex *dest, t_vertex4 src)
 {
     dest->x = src.x;
     dest->y = src.y;
     dest->z = src.z;
 }
 
-int         fill_v4(t_obj *obj, t_vertex4 *v, char *line)
+static int         fill_v4(t_obj *obj, t_vertex4 *v, char *line)
 {
     if (str_tov4(&obj->v[obj->size_v[0]], line))
         return (1);
@@ -75,7 +74,7 @@ int         fill_v4(t_obj *obj, t_vertex4 *v, char *line)
    return (0);
 }
 
-int         fill_v3(t_obj *obj, t_vertex *dest, char *line)
+static int         fill_v3(t_obj *obj, t_vertex *dest, char *line)
 {
     int i;
 

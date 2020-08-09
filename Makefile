@@ -6,11 +6,11 @@
 #    By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 18:00:02 by lomasse           #+#    #+#              #
-#    Updated: 2020/08/09 18:09:48 by lomasse          ###   ########.fr        #
+#    Updated: 2020/08/09 19:46:53 by lomasse          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = objreader.a
+NAME = libobjreader.a
 
 SRCS = Sources/Initiaize/init_obj.c \
 	Sources/Parsing/fill_face.c \
@@ -24,6 +24,8 @@ SRCS = Sources/Initiaize/init_obj.c \
 INC = -I ./Includes/ \
 		-I ./libft/
 
+LIB = -L ./libft libft/libft.a
+
 FLAGS = 
 
 CC 				= gcc
@@ -36,7 +38,7 @@ $(NAME): $(OBJS)
 	$(LIBS_FLAGS) $(NAME) $(OBJS)
 
 %.o: %.c
-	$(CC) $(INC) -o $@ -c $< $(FLAGS)
+	$(CC) $(INC) -o $@ -c $< $(FLAGS) $(LIB)
 
 all: $(NAME)
 

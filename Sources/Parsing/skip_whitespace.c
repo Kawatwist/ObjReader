@@ -6,14 +6,11 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 22:10:28 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/09 15:42:26 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 19:43:44 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/ObjReader.h"
-#include "../../Includes/ObjError.h"
-#include "../../libft/get_next_line.h"
-#include <fcntl.h>
 
 char        *skip_whitespace(char *str)
 {

@@ -6,13 +6,11 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 20:58:20 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/08 22:19:12 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 19:33:39 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/ObjReader.h"
-
-t_obj       *getobj(t_obj *obj);
 
 int     init_obj(t_obj *obj)
 {
