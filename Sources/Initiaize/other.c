@@ -15,13 +15,35 @@
 t_obj       *getobj(t_obj *obj)
 {
     static t_obj *save = NULL;
+    t_obj *tmp;
     
+    if (obj == 0x1 && save)
+        save = NULL;
+    else if (obj == 0x1)
+    {
+        printf("FreeObj Asked with Obj in memory\n");
+        return (NULL);
+    }
     if (save == NULL && obj)
         save = obj;
     else if (save != NULL && obj != NULL)
     {
         printf("Send Null to this function to get obj pointeur\n");
         return (NULL);
+    }
+    if (save->path)
+    {
+        while (save->next != NULL)
+            save = save->next;
+        if (!(save->next = ft_memalloc(sizeof(t_obj))))
+            return (NULL); // Should Return FreeObj
+        return (save->next);
+    }
+    if (obj == UNINDEXED)
+    {
+        tmp = save;
+        save = NULL;
+        return (tmp);
     }
     return (save);
 }

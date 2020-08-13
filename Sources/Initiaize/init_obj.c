@@ -18,6 +18,7 @@ int     init_obj(t_obj *obj)
 		return (-1);
 	obj->id = 0;
 	obj->sub_id = 0;
+	obj->flag = 0;
 	obj->path = NULL;
 	obj->face = NULL;
 	obj->v = NULL;

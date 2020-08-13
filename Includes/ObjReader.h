@@ -18,6 +18,12 @@
 # include "../Includes/ObjError.h"
 # include "../libft/get_next_line.h"
 
+# define INFO			1
+# define MEMORY			1 << 1
+# define TRIANGLE		1 << 2
+# define REMOVE_DOUBLE	1 << 3
+# define UNINDEXED		1 << 4
+
 typedef struct			s_vertex4
 {
 	float				w;
@@ -52,6 +58,7 @@ typedef struct          s_obj
 {
 	int					id;
 	int					sub_id;
+	int					flag;
 	long int			line;
 	char				*path;
 	long int			size_v[2];

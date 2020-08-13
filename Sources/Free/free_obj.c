@@ -15,19 +15,25 @@
 void    free_obj(t_obj *obj) // Need ptr before
 {
     int i;
-    ft_memdel((void **)(&obj->v));
-    ft_memdel((void **)(&obj->vt));
-    ft_memdel((void **)(&obj->vn));
-    ft_memdel((void **)(&obj->vp));
-    i = -1;
-    // while (++i < obj->size_face[0])
-    // {
-    //     if (i < obj->face[i].size)
-    //         ft_memdel((void **)(&obj->face[i].i_v));
-    //     if (i < obj->size_vt[0])
-    //         ft_memdel((void **)(&obj->face[i].i_vt));
-    //     if (i < obj->size_vn[0])
-    //         ft_memdel((void **)(&obj->face[i].i_vn));
-    // }
-    ft_memdel((void **)(&obj->face));
+    
+    if (obj == NULL)
+        if (!(obj = getobj(NULL)))
+            return ;
+    while (obj != NULL)
+    {
+        ft_memdel((void **)(&obj->v));
+        ft_memdel((void **)(&obj->vt));
+        ft_memdel((void **)(&obj->vn));
+        ft_memdel((void **)(&obj->vp));
+        i = -1;
+        while (++i < obj->size_face[0])
+        {
+            ft_memdel((void **)(&obj->face[i].i_v));
+            ft_memdel((void **)(&obj->face[i].i_vt));
+            ft_memdel((void **)(&obj->face[i].i_vn));
+        }
+        ft_memdel((void **)(&obj->face));
+        obj = obj->next;
+    }
+    getobj(0x1);
 }
