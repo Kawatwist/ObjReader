@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   skip_whitespace.c                                  :+:      :+:    :+:   */
+/*   init_obj.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/08 22:10:28 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/12 21:39:02 by lomasse          ###   ########.fr       */
+/*   Created: 2020/08/08 20:58:20 by lomasse           #+#    #+#             */
+/*   Updated: 2020/08/09 19:53:57 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/ObjReader.h"
 
-char        *skip_whitespace(char *str, long int max)
+int     init_obj(t_obj *obj)
 {
-    int     i;
-    char    *ret;
-
-    i = -1;
-    while ((str[++i] == ' ' || str[i] == '\t'
-        || str[i] == '\f') && str[i] && max)
-        max--;
-    if (!str[i])
-        return (0x0);
-    return (str + i);
+	if (obj == NULL)
+		return (-1);
+	obj->id = 0;
+	obj->sub_id = 0;
+	obj->path = NULL;
+	obj->face = NULL;
+	obj->v = NULL;
+	obj->vt = NULL;
+	obj->vn = NULL;
+	obj->vp = NULL;
+	obj->next = NULL;
+	getobj(obj);
+	return (0);
 }

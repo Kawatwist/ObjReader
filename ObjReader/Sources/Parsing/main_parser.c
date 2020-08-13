@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 21:54:34 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/13 14:11:14 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/11 17:15:07 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ static int            init_v_malloc(t_obj *obj)
     ft_memset(obj->vp, 0, sizeof(t_vertex) * 64);
     return (0);
 }
+
 static char     *ft_ralloc(char **str,  long int oldsize, long int newsize)
 {
 	char *res;
+
     if (oldsize <= newsize)
         return (*str);
 	if (!(res = ft_strnew(newsize)))
@@ -51,95 +53,59 @@ static char     *ft_ralloc(char **str,  long int oldsize, long int newsize)
 	ft_memdel((void **)str);
     return (res);
 }
+
 static int             adjust_allocation(t_obj *obj)
 {
     return (0);
 }
 
-void            fill_file(char **file, t_lst_buff *buffer, long int length)
-{
-    long unsigned int   pos;
-    int                 i;
-    void                *ptr;
-
-    pos = 0;
-    while (buffer != NULL)
-    {
-        i = -1;
-        while (++i < 0b1111111111111110 && i < length)
-        {
-            (*file)[pos] = buffer->buff[i];
-            pos += 1;
-        }        
-        length -= 0b1111111111111110;
-        ptr = buffer;
-        buffer = buffer->next;
-        free(ptr);
-    }
-}
-
 int             main_parser(t_obj *obj)
 {
+    char    *line;
     char    *new;
     int     fd;
     int     error;
+    
+    char    *file;
+    long int parsed_file[2];
+    long int reader;
 
+    parsed_file[0] = 0;
+    parsed_file[1] = (size_t)((short)~1);
     fd = open(obj->path, O_RDONLY);
     if (fd == -1)
         return (objerror(obj, 2));
     if (init_v_malloc(obj))
         return (objerror(obj, 1));
-
-    char        *file;
-    long int    mem_size[2];
-    size_t      reader;
-    size_t      len_read;
-    t_lst_buff  *buffer_lst;
-    t_lst_buff  *lst;
-
-    len_read = 0b1111111111111110;
-    if (!(buffer_lst = malloc(sizeof(t_lst_buff))))
+        
+    obj->line = 1;
+    if (!(file = malloc(sizeof(parsed_file[1]))))
         return (1);
-    reader = read(fd, buffer_lst->buff, len_read);
-    if (reader == len_read + 1)
-        printf("Reader error\n");
-    mem_size[1] = reader;
-    if (!(buffer_lst->next = malloc(sizeof(t_lst_buff))))
-        return (1);
-    lst = buffer_lst->next;
-    while ((reader = (size_t)read(fd, lst->buff, len_read)) == len_read)
+    ft_memset(file, 0, parsed_file[0]);
+    while ((reader = read(fd, &(file[parsed_file[0]]), (size_t)((short)~1))) == (ssize_t)((short)~1)))
     {
-        mem_size[1] += reader;
-        if (!(lst->next = malloc(sizeof(t_lst_buff))))
-            return (1);
-        lst =lst->next;
+        parsed_file[0] += (size_t)reader;
+        parsed_file[1] += (size_t)((short)~1);
+        ft_ralloc(&(file), parsed_file[0], parsed_file[1]);
     }
-    lst->next = NULL;
-    mem_size[1] += reader;
-    printf("SIZE%ld\n", mem_size[1]);
-    if (reader == len_read + 1)
-        printf("Reader error -1\n");
-    printf("Read end\n");
-    if (!(file = malloc(mem_size[1])))
-        return (1);
-    fill_file(&file, buffer_lst, mem_size[1]);
-    printf("Fill end\n");
     
-    char    *tmp;
-    char    *line;
-    line = file;
-    tmp = line;
-    obj->line = 0;
-    mem_size[0] = mem_size[1];
-    new = skip_whitespace(line, mem_size[0]);
-    if (new == NULL)
-        return (objerror(obj, 4));
-    line = ft_memchr(new, '\n', mem_size[0]);
-    line[0] = '\0';
-    while (line && new && mem_size[0])
+   /* char    *save;
+    while ((reader = read(fd, file, (size_t)((short)~1))) == (ssize_t)((short)~1)))
     {
-        if (!(obj->line % 100000))
-            printf("%%%d ==> %ld\n", (int)(100 - ((float)mem_size[0] / (float)mem_size[1]) * 100.0));
+        parsed_file[0] += (size_t)reader;
+        parsed_file[1] += (size_t)((short)~1);
+        ft_strjoinfree(save, file, 3);
+        ft_ralloc(&(file), parsed_file[0], parsed_file[1]);
+    }
+    ft_strjoinfree(save, file, 3);
+*/
+
+    parsed_file[0] += (size_t)reader;
+
+    line = file;
+    while ((line = ft_memchr(line, '\n')) && (line - file < parsed_file[0]))
+    {
+        new = skip_whitespace(line);
         if (new == NULL || !new[0])
            ;
         else if (new[0] == 'v')
@@ -164,48 +130,16 @@ int             main_parser(t_obj *obj)
             ;
         else if (new[0] == 'u')
             ;
-        else if (new[0] == '\n')
-            ;
         else
         {
-            printf("Invalid char : %s\n", new);
+            printf("==> %s\n", new);
             return (objerror(obj, 4));
         }
-        line = ft_memchr(new, '\0', mem_size[0]);
-        if (line == NULL)
-            break ;
-        line += 1;
-        while (mem_size[0] && line[0] == '\n')
-        {
-            line++;
-            mem_size[0] -= 1;
-        }
-        mem_size[0] -= line - tmp;
-        if (mem_size[0] <= 0)
-            break ;
-        tmp = line;
-        if ((obj->line > 51777300))
-            printf("Before Skip\n");
-        new = skip_whitespace(line, mem_size[0]);
-        if (new == NULL)
-            break ;
-        if ((obj->line > 51777300))
-            printf("Skip\n");
-        line = ft_memchr(new, '\n', mem_size[0]);
-        if ((obj->line > 51777300))
-            printf("Skip\n");
-        if (line != NULL)
-            line[0] = '\0';
-        else
-            break ;
         obj->line++;
     }
-    printf("Parsing Done\n");
     free(file);
     printf("Min : %f\t\t%f\t\t%f\n", obj->min.x, obj->min.y, obj->min.z);
     printf("Max : %f\t\t%f\t\t%f\n", obj->max.x, obj->max.y, obj->max.z);
-    printf("Min : %f\t\t%f\t\t%f\n", obj->vtmin.x, obj->vtmin.y, obj->vtmin.z); // useless ?
-    printf("Max : %f\t\t%f\t\t%f\n", obj->vtmax.x, obj->vtmax.y, obj->vtmax.z);
     obj->center.x = (obj->min.x + obj->max.x / 2.0);
     obj->center.y = (obj->min.y + obj->max.y / 2.0);
     obj->center.z = (obj->min.z + obj->max.z / 2.0);

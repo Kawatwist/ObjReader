@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:00:45 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/13 13:59:48 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/10 18:45:10 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int       get_index(char *line, int *i, int (*index)[3], int nb, t_face *
     else if (ft_isspace(line[*i]))
         return (4);
     (*i)++;
-    (*index)[1] = ft_atoi(&(line[*i]));
+    (*index)[1] = ft_atoi(&(line[*i - 1]));
     if ((*index)[1] < 0)
         (*index)[1] = obj->size_vt[0] - (*index)[1];
     while (line[*i] && (line[*i] != '/' && !ft_isspace(line[*i])))
@@ -87,7 +87,7 @@ static int       get_index(char *line, int *i, int (*index)[3], int nb, t_face *
     else if (ft_isspace(line[*i]))
         return (4);
     (*i)++;
-    (*index)[2] = ft_atoi(&(line[*i]));
+    (*index)[2] = ft_atoi(&(line[*i - 1]));
     if ((*index)[2] < 0)
         (*index)[2] = obj->size_vn[0] - (*index)[2];
     return (0);

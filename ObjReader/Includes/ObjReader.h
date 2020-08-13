@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 20:17:18 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/13 14:07:06 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/09 19:54:02 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,6 @@ typedef	struct			s_face
 	unsigned int		flag;
 }						t_face;
 
-typedef	struct			s_lst_buff
-{
-	char				buff[0b1111111111111110];
-	struct s_lst_buff	*next;
-}						t_lst_buff;
-
 typedef struct          s_obj
 {
 	int					id;
@@ -67,8 +61,6 @@ typedef struct          s_obj
 	t_vertex			min;
 	t_vertex			max;
 	t_vertex			center;
-	t_vertex			vtmin;
-	t_vertex			vtmax;
 	struct s_obj        *next;
 }                       t_obj;
 
@@ -76,7 +68,8 @@ typedef struct          s_obj
 **	Parsing
 */
 
-char        			*skip_whitespace(char *str, long int max);
+char        			*skip_whitespace(char *str);
+char      				*skip_whitespace(char *str);
 void       				*realloc_vertex(t_obj *obj, char type, void **dest);
 int       				fill_vertex(t_obj *obj, char *line, char type);
 int       				find_next(char *line, int i);
@@ -88,7 +81,6 @@ int       				main_parser(t_obj *obj);
 **	Initialize
 */
 
-void    				free_obj(t_obj *obj);
 int         			objload(char *path);
 int         			objerror(t_obj *obj, int code);
 t_obj       			*getobj(t_obj *obj);

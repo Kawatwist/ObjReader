@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 23:04:39 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/13 16:48:40 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/11 15:09:42 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int         find_next(char *line, int i)
 {
-    while (line[i] && !ft_isspace(line[i]) && line[i] != '\n')
+    while (line[i] && !ft_isspace(line[i]))
         i++;
-    while (line[i] && ft_isspace(line[i]) && line[i] != '\n')
+    while (line[i] && ft_isspace(line[i]))
         i++;
     return (i);
 }
@@ -110,20 +110,20 @@ static int         str_tov4(t_vertex4 *dest, char *line)
     i = find_next(line, i);
     if (!line[i])
         return (1);
-    dest->x = atof(&(line[i]));
+    dest->x = ft_atof2(&(line[i]));
     i = find_next(line, i);
     if (!line[i])
         return (1);
-    dest->y = atof(&(line[i]));
+    dest->y = ft_atof2(&(line[i]));
     i = find_next(line, i);
     if (!line[i])
         return (1);
-    dest->z = atof(&(line[i])); // Attention atof not ft_atof
+    dest->z = ft_atof2(&(line[i]));
     i = find_next(line, i);
     if (!line[i])
         dest->w = 1;
     else
-        dest->w = atof(&(line[i]));
+        dest->w = ft_atof2(&(line[i]));
     return (0);
 }
 
@@ -155,45 +155,21 @@ static int         fill_v4(t_obj *obj, t_vertex4 *v, char *line)
    return (0);
 }
 
-static int         fill_v3(t_obj *obj, t_vertex *dest, char *line, char type)
+static int         fill_v3(t_obj *obj, t_vertex *dest, char *line)
 {
     int i;
 
     i = 0;
     i = find_next(line, i);
-    i++;
     if (!line[i])
         return (1);
-    dest->x = atof(&(line[i]));
+    dest->x = ft_atof2(&(line[i]));
     i = find_next(line, i);
-    i++;
     if (!line[i])
         return (1);
-    dest->y = atof(&(line[i - 1]));
+    dest->y = ft_atof2(&(line[i - 1]));
     i = find_next(line, i);
-    i++;
-    dest->z = atof(&(line[i])); //atof
-    if (type == 1)
-    {
-        if (!obj->size_vt[0])
-        {
-            obj->vtmin.x = obj->vt[0].x;
-            obj->vtmin.y = obj->vt[0].y;
-            obj->vtmin.z = obj->vt[0].z;
-            obj->vtmax.x = obj->vt[0].x;
-            obj->vtmax.y = obj->vt[0].y;
-            obj->vtmax.z = obj->vt[0].z;
-        }
-        else
-        {
-            obj->vtmin.x > obj->vt[obj->size_vt[0]].x ? obj->vtmin.x = obj->vt[obj->size_vt[0]].x : 0;
-            obj->vtmin.y > obj->vt[obj->size_vt[0]].y ? obj->vtmin.y = obj->vt[obj->size_vt[0]].y : 0;
-            obj->vtmin.z > obj->vt[obj->size_vt[0]].z ? obj->vtmin.z = obj->vt[obj->size_vt[0]].z : 0;
-            obj->vtmax.x < obj->vt[obj->size_vt[0]].x ? obj->vtmax.x = obj->vt[obj->size_vt[0]].x : 0;
-            obj->vtmax.y < obj->vt[obj->size_vt[0]].y ? obj->vtmax.y = obj->vt[obj->size_vt[0]].y : 0;
-            obj->vtmax.z < obj->vt[obj->size_vt[0]].z ? obj->vtmax.z = obj->vt[obj->size_vt[0]].z : 0;
-        }
-    }
+    dest->z = ft_atof2(&(line[i]));
     return (0);
 }
 
@@ -206,17 +182,17 @@ int         fill_vertex(t_obj *obj, char *line, char type)
     }
     else if (type == 1)
     {
-        if (fill_v3(obj, &obj->vt[obj->size_vt[0]], line, type))
+        if (fill_v3(obj, &obj->vt[obj->size_vt[0]], line))
             return (1);
     }
     else if (type == 2)
     {
-        if (fill_v3(obj, &obj->vn[obj->size_vn[0]], line, type))
+        if (fill_v3(obj, &obj->vn[obj->size_vn[0]], line))
             return (1);
     }
     else if (type == 3)
     {
-        if (fill_v3(obj, &obj->vp[obj->size_vp[0]], line, type))
+        if (fill_v3(obj, &obj->vp[obj->size_vp[0]], line))
             return (1);
     }
     else

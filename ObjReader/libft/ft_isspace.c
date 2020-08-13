@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   skip_whitespace.c                                  :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/08 22:10:28 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/12 21:39:02 by lomasse          ###   ########.fr       */
+/*   Created: 2020/01/19 22:34:43 by luwargni          #+#    #+#             */
+/*   Updated: 2020/08/09 15:59:32 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/ObjReader.h"
+#include "libft.h"
 
-char        *skip_whitespace(char *str, long int max)
+int		ft_isspace(char c)
 {
-    int     i;
-    char    *ret;
-
-    i = -1;
-    while ((str[++i] == ' ' || str[i] == '\t'
-        || str[i] == '\f') && str[i] && max)
-        max--;
-    if (!str[i])
-        return (0x0);
-    return (str + i);
+	if (c == ' ' || c == 8 || c == 13 || c == '\t')
+		return (1);
+	return (0);
 }

@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   skip_whitespace.c                                  :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/08 22:10:28 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/12 21:39:02 by lomasse          ###   ########.fr       */
+/*   Created: 2020/01/19 22:40:22 by luwargni          #+#    #+#             */
+/*   Updated: 2020/01/20 17:38:30 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/ObjReader.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-char        *skip_whitespace(char *str, long int max)
+# define BUFF_SIZE 500
+
+# include <stdlib.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include "libft.h"
+
+typedef struct		s_gnl
 {
-    int     i;
-    char    *ret;
+	size_t			fd;
+	size_t			find;
+	char			tmp[BUFF_SIZE];
+	struct s_gnl	*next;
+}					t_gnl;
 
-    i = -1;
-    while ((str[++i] == ' ' || str[i] == '\t'
-        || str[i] == '\f') && str[i] && max)
-        max--;
-    if (!str[i])
-        return (0x0);
-    return (str + i);
-}
+int					get_next_line(const int fd, char **line);
+
+#endif
