@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 21:27:23 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/14 13:58:20 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/14 16:47:51 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,5 @@ int         objload(char *path, int flag)
     if (obj->flag & REMOVE_DOUBLE)
         if ((error = remove_double(obj)))
             return (error);
-    getobj((void *)(UNINDEX));
     return (0);
 }

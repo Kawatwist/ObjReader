@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:00:45 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/13 13:59:48 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/14 15:52:32 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,22 @@ static char     *ft_ralloc(char **str, long int newsize)
     return (res);
 }
 
-static void       *realloc_face(t_obj *obj, void    **dest)
+static void       *realloc_face(t_obj *obj, void **dest, t_group *ptr)
 {
     long int    size;
  
-    size = obj->size_face[1] * sizeof(t_face);
+    size = ptr->size_face[1] * sizeof(t_face);
     return (ft_ralloc((char **)(dest), size));
 }
 
-static int       allocate_index(t_obj *obj, int nb_index)
+static int       allocate_index(t_obj *obj, int nb_index, t_group *ptr)
 {
-    obj->face[obj->size_face[0]].size = nb_index;
-    if (!(obj->face[obj->size_face[0]].i_v = malloc((sizeof(int) * nb_index) * 3)))
+    ptr->face[ptr->size_face[0]].size = nb_index;
+    if (!(ptr->face[ptr->size_face[0]].i_v = malloc((sizeof(int) * nb_index) * 3)))
         return (1);
-    ft_bzero(obj->face[obj->size_face[0]].i_v, (sizeof(int) * nb_index) * 3);
-    obj->face[obj->size_face[0]].i_vt = &(obj->face[obj->size_face[0]].i_v[nb_index]);
-    obj->face[obj->size_face[0]].i_vn = &(obj->face[obj->size_face[0]].i_vt[nb_index]);
+    ft_bzero(ptr->face[ptr->size_face[0]].i_v, (sizeof(int) * nb_index) * 3);
+    ptr->face[ptr->size_face[0]].i_vt = &(ptr->face[ptr->size_face[0]].i_v[nb_index]);
+    ptr->face[ptr->size_face[0]].i_vn = &(ptr->face[ptr->size_face[0]].i_vt[nb_index]);
     return (0);
 }
 
@@ -93,7 +93,7 @@ static int       get_index(char *line, int *i, int (*index)[3], int nb, t_face *
     return (0);
 }
 
-static int         fill_index_face(t_obj *obj, char *line)
+static int         fill_index_face(t_obj *obj, char *line, t_group *ptr)
 {
     int     index[3];
     int     i;
@@ -102,19 +102,19 @@ static int         fill_index_face(t_obj *obj, char *line)
     
     i = 0;
     nb = 0;
-    while (nb < obj->face[obj->size_face[0]].size)
+    while (nb < ptr->face[ptr->size_face[0]].size)
     {
-        if ((error = get_index(line, &i, &(index), nb, &obj->face[obj->size_face[0]], obj)))
+        if ((error = get_index(line, &i, &(index), nb, &ptr->face[ptr->size_face[0]], obj)))
             return (error);
-        obj->face[obj->size_face[0]].i_v[nb] = index[0];
-        obj->face[obj->size_face[0]].i_vt[nb] = index[1];
-        obj->face[obj->size_face[0]].i_vn[nb] = index[2];
+        ptr->face[ptr->size_face[0]].i_v[nb] = index[0];
+        ptr->face[ptr->size_face[0]].i_vt[nb] = index[1];
+        ptr->face[ptr->size_face[0]].i_vn[nb] = index[2];
         nb++;
     }
     return (0);
 }
 
-static int         fill_face(t_obj *obj, char *line)
+static int         fill_face(t_obj *obj, char *line, t_group *ptr)
 {
     int     nb_index;
     int     i;
@@ -133,24 +133,24 @@ static int         fill_face(t_obj *obj, char *line)
         printf("Incorrect Face (%s)\n", line);
         return (4);
     }
-    if (allocate_index(obj, nb_index))
+    if (allocate_index(obj, nb_index, ptr))
         return (1);
-    if ((error = fill_index_face(obj, line)))
+    if ((error = fill_index_face(obj, line, ptr)))
         return (error);
     return (0);
 }
 
-int         parsing_face(t_obj *obj, char *line)
+int         parsing_face(t_obj *obj, t_group *ptr, char *line)
 {
     int error;
 
-    if ((error = fill_face(obj, line)))
+    if ((error = fill_face(obj, line, ptr)))
         return (error);
-    obj->size_face[0] += 1;
-    if (obj->size_face[0] == obj->size_face[1])
+    ptr->size_face[0] += 1;
+    if (ptr->size_face[0] == ptr->size_face[1])
     {
-        obj->size_face[1] *= 2;
-        if (!(obj->face = realloc_face(obj, (void **)(&obj->face))))
+        ptr->size_face[1] *= 2;
+        if (!(ptr->face = realloc_face(obj, (void **)(&ptr->face), ptr)))
             return (1);
     }
     return (0);

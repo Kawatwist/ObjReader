@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 21:54:34 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/14 13:56:15 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/14 16:50:21 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 static int            init_v_malloc(t_obj *obj)
 {
-	obj->size_face[0] = 0;
-	obj->size_face[1] = 64;
-	if (!(obj->face = malloc(sizeof(t_face) * 64)))
+	if (!(obj->group = malloc(sizeof(t_group))))
+		return (1);
+	obj->group->next = NULL;
+	obj->group->size_face[0] = 0;
+	obj->group->size_face[1] = 64;
+	if (!(obj->group->face = malloc(sizeof(t_face) * 64)))
 		return (1);
 	obj->size_v[0] = 0;
 	obj->size_v[1] = 64;
@@ -99,6 +102,16 @@ void            fill_file(char **file, t_lst_buff *buffer, long int length)
 	}
 }
 
+int			init_newgroup(t_group *ptr)
+{
+	ptr->material = NULL;
+	ptr->size_face[0] = 0;
+	ptr->size_face[1] = 64;
+	if (!(ptr->face = malloc(sizeof(t_face) * 64)))
+		return (1);
+	return (0);
+}
+
 int             main_parser(t_obj *obj)
 {
 	char    *new;
@@ -148,6 +161,9 @@ int             main_parser(t_obj *obj)
 	
 	char    *tmp;
 	char    *line;
+	t_group	*ptr;
+
+	ptr = obj->group;
 	line = file;
 	tmp = line;
 	obj->line = 0;
@@ -160,7 +176,7 @@ int             main_parser(t_obj *obj)
 	while (line && new && mem_size[0])
 	{
 		if (!(obj->line % 100000))
-			printf("%%%d ==> %d\n", (int)(100 - ((float)mem_size[0] / (float)mem_size[1]) * 100.0));
+			printf("%% %d ==> %d\n", (int)(100 - ((float)mem_size[0] / (float)mem_size[1]) * 100.0), mem_size[0]);
 		if (new == NULL || !new[0])
 			;
 		else if (new[0] == 'v')
@@ -170,7 +186,7 @@ int             main_parser(t_obj *obj)
 		}
 		else if (new[0] == 'f')
 		{
-			if ((error = parsing_face(obj, new)))
+			if ((error = parsing_face(obj, ptr, new)))
 				return (objerror(obj, error));
 		}
 		else if (new[0] == '#')
@@ -178,12 +194,32 @@ int             main_parser(t_obj *obj)
 		else if (new[0] == 'o')
 			;
 		else if (new[0] == 'g')
-			;
-		else if (new[0] == 'm')
-			;
+		{
+			if (ptr->size_face[0] > 0)
+			{
+				if (!(ptr->next = malloc(sizeof(t_group))))
+					return (objerror(obj, 1));
+				ptr = ptr->next;
+				if ((error = init_newgroup(ptr)))
+					return (objerror(obj, 1));
+				printf("New group Create\n");
+			}
+		}
+		else if (new[0] == 'm' || new[0] == 'u')
+		{
+			int size;
+			size = ft_strlen(&(new[6]));
+			if (new[0] == 'm')
+				obj->mtlib = ft_strndup(skip_whitespace(&(new[6]), size), size);
+			else
+			{
+				ptr->material = ft_strdup(skip_whitespace(&(new[6]), size));
+				ptr->material[ft_strlen(ptr->material) - 1] = 0;
+			}
+		}
 		else if (new[0] == 's')
 			;
-		else if (new[0] == 'u')
+		else if (new[0] == '\r')
 			;
 		else
 		{
@@ -213,7 +249,7 @@ int             main_parser(t_obj *obj)
 			break ;
 		obj->line++;
 	}
-	if (obj->flag & INFO)
+	if (obj->flag & MEMORY)
 	{
 		if (adjust_allocation(obj))
 			return (1);
@@ -234,7 +270,20 @@ int             main_parser(t_obj *obj)
 		printf("\t\t. %ld\t\t= vt\t\t%ld\t(Mallocated)\n", obj->size_vt[0], obj->size_vt[1]);
 		printf("\t\t. %ld\t\t= vn\t\t%ld\t(Mallocated)\n", obj->size_vn[0], obj->size_vn[1]);
 		printf("\t\t. %ld\t\t= vp\t\t%ld\t(Mallocated)\n", obj->size_vp[0], obj->size_vp[1]);
-		printf("\t\t. %ld\t\t= f~\t\t%ld\t(Mallocated)\n", obj->size_face[0], obj->size_face[1]);
+		t_group *ptr;
+		int		i;
+		int		j;
+
+		i = 0;
+		ptr = obj->group;
+		while (ptr)
+		{
+			printf("\t\tGroup[%d] => . %ld\t\t= f~\t\t%ld\t(Mallocated)\n",i, ptr->size_face[0], ptr->size_face[1]);
+			printf("\t\t\tMaterial : [%s]\n", ptr->material);
+			printf("\t\t\tPath : [%s]\n", ptr->path);
+			ptr = ptr->next;
+			i++;
+		}
 		printf("Done : %s\n", obj->path);
 	}
 	return (0);

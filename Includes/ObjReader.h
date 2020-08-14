@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 20:17:18 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/14 13:57:47 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/14 15:56:58 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,15 @@ typedef	struct			s_face
 	unsigned int		flag;
 }						t_face;
 
+typedef struct			s_group
+{
+	long int			size_face[2];
+	char				*material;
+	char				*path;
+	t_face				*face;
+	struct	s_group		*next;
+}						t_group;
+
 typedef	struct			s_lst_buff
 {
 	char				buff[0b1111111111111110];
@@ -61,12 +70,12 @@ typedef struct          s_obj
 	int					flag;
 	long int			line;
 	char				*path;
+	char				*mtlib;
 	long int			size_v[2];
 	long int			size_vt[2];
 	long int			size_vn[2];
 	long int			size_vp[2];
-	long int			size_face[2];
-	t_face				*face;
+	t_group				*group;
 	t_vertex4			*v;
 	t_vertex			*vt;
 	t_vertex			*vn;
@@ -87,7 +96,7 @@ char        			*skip_whitespace(char *str, long int max);
 void       				*realloc_vertex(t_obj *obj, char type, void **dest);
 int       				fill_vertex(t_obj *obj, char *line, char type);
 int       				find_next(char *line, int i);
-int       				parsing_face(t_obj *obj, char *line);
+int       				parsing_face(t_obj *obj, t_group *ptr, char *line);
 int      				parsing_vertex(t_obj *obj, char *line);
 int       				main_parser(t_obj *obj);
 

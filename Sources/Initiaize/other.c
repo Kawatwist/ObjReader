@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 20:07:31 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/14 13:59:31 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/14 16:49:03 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_obj       *getobj(t_obj *obj)
     
     if (obj == (t_obj *)0x1 && save)
         save = NULL;
-    else if (obj == (void *)0x1)
+    else if (obj == (void *)(MEMORY))
     {
         printf("FreeObj Asked with Obj in memory\n");
         return (NULL);
@@ -33,11 +33,12 @@ t_obj       *getobj(t_obj *obj)
     }
     if (save->path)
     {
-        while (save->next != NULL)
-            save = save->next;
-        if (!(save->next = ft_memalloc(sizeof(t_obj))))
+        tmp = save;
+        while (tmp->next != NULL)
+            tmp = tmp->next;
+        if (!(tmp->next = ft_memalloc(sizeof(t_obj))))
             return (NULL); // Should Return FreeObj
-        return (save->next);
+        return (tmp->next);
     }
     if (obj == (void *)(UNINDEX))
     {

@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 22:10:28 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/12 21:39:02 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/14 16:19:16 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char        *skip_whitespace(char *str, long int max)
 
     i = -1;
     while ((str[++i] == ' ' || str[i] == '\t'
-        || str[i] == '\f') && str[i] && max)
+        || str[i] == '\f' || str[i] == '\r') && str[i] && max)
         max--;
     if (!str[i])
         return (0x0);
