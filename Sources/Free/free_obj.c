@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/12 22:09:28 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/12 22:22:50 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/14 13:58:38 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void    free_obj(t_obj *obj) // Need ptr before
     int i;
     
     if (obj == NULL)
-        if (!(obj = getobj(NULL)))
+        if (!(obj = getobj((void *)0)))
             return ;
     while (obj != NULL)
     {
@@ -35,5 +35,5 @@ void    free_obj(t_obj *obj) // Need ptr before
         ft_memdel((void **)(&obj->face));
         obj = obj->next;
     }
-    getobj(0x1);
+    getobj((void *)0x1);
 }

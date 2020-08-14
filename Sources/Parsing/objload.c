@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 21:27:23 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/09 19:43:30 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/14 13:58:20 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int         objload(char *path, int flag)
 
     if (!path)
         return (objerror(obj, 2));
-    obj = getobj(NULL);
+    obj = getobj((void *)0);
     if (!obj)
         return (objerror(obj, 3));
     obj->path = ft_strdup(path);
@@ -39,11 +39,11 @@ int         objload(char *path, int flag)
     if ((error = main_parser(obj)))
         return (error);
     if (obj->flag & TRIANGLE)
-        if ((error = TRIANGLE(obj)))
+        if ((error = triangle(obj)))
             return (error);
     if (obj->flag & REMOVE_DOUBLE)
         if ((error = remove_double(obj)))
             return (error);
-    getobj(UNINDEXED);
+    getobj((void *)(UNINDEX));
     return (0);
 }

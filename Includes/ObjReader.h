@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 20:17:18 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/13 14:07:06 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/14 13:57:47 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define MEMORY			1 << 1
 # define TRIANGLE		1 << 2
 # define REMOVE_DOUBLE	1 << 3
-# define UNINDEXED		1 << 4
+# define UNINDEX		1 << 4
 
 typedef struct			s_vertex4
 {
@@ -96,7 +96,7 @@ int       				main_parser(t_obj *obj);
 */
 
 void    				free_obj(t_obj *obj);
-int         			objload(char *path);
+int         			objload(char *path, int flag);
 int         			objerror(t_obj *obj, int code);
 t_obj       			*getobj(t_obj *obj);
 int						init_obj(t_obj *obj);

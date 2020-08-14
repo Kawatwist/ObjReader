@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 21:54:34 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/13 14:11:14 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/14 13:56:15 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,29 @@ static int             adjust_allocation(t_obj *obj)
 	printf("Memory Management\n");
 	tmp = obj->v;
 	obj->v = NULL;
-	if (obj->v = malloc(sizeof(t_vertex4) * obj->size_v[0]))
+	if (!(obj->v = malloc(sizeof(t_vertex4) * obj->size_v[0])))
 		return (1);
 	ft_memcpy(obj->v, tmp, sizeof(t_vertex4) * obj->size_v[0]);
 	obj->size_v[1] = obj->size_v[0];
 	tmp = obj->vt;
 	obj->vt = NULL;
-	if (obj->vt = malloc(sizeof(t_vertex3) * obj->size_vt[0]))
+	if (!(obj->vt = malloc(sizeof(t_vertex) * obj->size_vt[0])))
 		return (1);
-	ft_memcpy(obj->vt, tmp, sizeof(t_vertex3) * obj->size_vt[0]);
+	ft_memcpy(obj->vt, tmp, sizeof(t_vertex) * obj->size_vt[0]);
 	free(tmp);
 	obj->size_vt[1] = obj->size_vt[0];
 	tmp = obj->vn;
 	obj->vn = NULL;
-	if (obj->vn = malloc(sizeof(t_vertex3) * obj->size_vn[0]))
+	if (!(obj->vn = malloc(sizeof(t_vertex) * obj->size_vn[0])))
 		return (1);
-	ft_memcpy(obj->vn, tmp, sizeof(t_vertex3) * obj->size_vn[0]);
+	ft_memcpy(obj->vn, tmp, sizeof(t_vertex) * obj->size_vn[0]);
 	free(tmp);
 	obj->size_vn[1] = obj->size_vn[0];
 	tmp = obj->vp;
 	obj->vp = NULL;
-	if (obj->vp = malloc(sizeof(t_vertex3) * obj->size_vp[0]))
+	if (!(obj->vp = malloc(sizeof(t_vertex) * obj->size_vp[0])))
 		return (1);
-	ft_memcpy(obj->vp, tmp, sizeof(t_vertex3) * obj->size_vp[0]);
+	ft_memcpy(obj->vp, tmp, sizeof(t_vertex) * obj->size_vp[0]);
 	free(tmp);
 	obj->size_vp[1] = obj->size_vp[0];
 	printf("Memory Management Done\n");
@@ -160,7 +160,7 @@ int             main_parser(t_obj *obj)
 	while (line && new && mem_size[0])
 	{
 		if (!(obj->line % 100000))
-			printf("%%%d ==> %ld\n", (int)(100 - ((float)mem_size[0] / (float)mem_size[1]) * 100.0));
+			printf("%%%d ==> %d\n", (int)(100 - ((float)mem_size[0] / (float)mem_size[1]) * 100.0));
 		if (new == NULL || !new[0])
 			;
 		else if (new[0] == 'v')
