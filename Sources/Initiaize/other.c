@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 20:07:31 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/14 16:49:03 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/16 17:37:41 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,18 @@
 
 t_obj       *getobj(t_obj *obj)
 {
-    static t_obj *save = NULL;
-    t_obj *tmp;
+    static t_obj    *save = NULL;
+    t_obj           *tmp;
+    int             nb;
     
+    if (((int)obj & INDEX))
+    {
+        nb = ((unsigned int)obj) >> 6;
+        tmp = save;
+        while (tmp && nb--)
+            tmp = tmp->next;
+        return (tmp);
+    }
     if (obj == (t_obj *)0x1 && save)
         save = NULL;
     else if (obj == (void *)(MEMORY))

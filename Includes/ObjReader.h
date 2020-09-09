@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 20:17:18 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/14 15:56:58 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/16 15:40:55 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include "../Includes/ObjError.h"
+# include "../Includes/MtlReader.h"
 # include "../libft/get_next_line.h"
 
 # define INFO			1
@@ -23,9 +24,10 @@
 # define TRIANGLE		1 << 2
 # define REMOVE_DOUBLE	1 << 3
 # define UNINDEX		1 << 4
+# define INDEX			1 << 5
 
 typedef struct			s_vertex4
-{
+{	
 	float				w;
 	float				x;
 	float				y;
@@ -71,6 +73,7 @@ typedef struct          s_obj
 	long int			line;
 	char				*path;
 	char				*mtlib;
+	long int			size_face[2];
 	long int			size_v[2];
 	long int			size_vt[2];
 	long int			size_vn[2];
@@ -85,6 +88,7 @@ typedef struct          s_obj
 	t_vertex			center;
 	t_vertex			vtmin;
 	t_vertex			vtmax;
+	t_material			*mtl;
 	struct s_obj        *next;
 }                       t_obj;
 

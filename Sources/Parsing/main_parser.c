@@ -6,7 +6,7 @@
 /*   By: lomasse <lomasse@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/08 21:54:34 by lomasse           #+#    #+#             */
-/*   Updated: 2020/08/14 16:50:21 by lomasse          ###   ########.fr       */
+/*   Updated: 2020/08/16 15:27:03 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ int             main_parser(t_obj *obj)
 	while (line && new && mem_size[0])
 	{
 		if (!(obj->line % 100000))
-			printf("%% %d ==> %d\n", (int)(100 - ((float)mem_size[0] / (float)mem_size[1]) * 100.0), mem_size[0]);
+			printf("%% %d ==> %ld\n", (int)(100 - ((float)mem_size[0] / (float)mem_size[1]) * 100.0), mem_size[0]);
 		if (new == NULL || !new[0])
 			;
 		else if (new[0] == 'v')
@@ -284,7 +284,7 @@ int             main_parser(t_obj *obj)
 			ptr = ptr->next;
 			i++;
 		}
-		printf("Done : %s\n", obj->path);
+		printf("Nb group : [%d]\nDone : %s\n", i, obj->path);
 	}
 	return (0);
 }
